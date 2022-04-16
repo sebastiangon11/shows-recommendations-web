@@ -10,11 +10,11 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-       <h1>Comming soon.</h1>
+        <h1 className="font-bold text-3xl">Show recommendations web</h1>
+        <h2 className="mt-8">Comming soon.</h2>
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-      </footer>
+      <footer className="flex h-24 w-full items-center justify-center border-t"></footer>
     </div>
   )
 }
