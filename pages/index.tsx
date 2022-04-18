@@ -13,6 +13,7 @@ const Home: NextPage = () => {
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <h1 className="text-3xl font-bold">{companyName} web.</h1>
         <p className="mt-8">Comming soon...</p>
+        <p>Wait for it</p>
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center font-extra-light">
