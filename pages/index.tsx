@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
-const Home: NextPage = () => {
-  const companyName: String | undefined = process.env.NEXT_PUBLIC_COMPANY_NAME
+const companyName: String | undefined = process.env.NEXT_PUBLIC_COMPANY_NAME
 
+const Home: NextPage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
