@@ -7,9 +7,9 @@ import { getErrorMessage } from '../utils/getErrorMessage'
 
 const companyName: string | undefined = process.env.NEXT_PUBLIC_COMPANY_NAME
 
-const getShow = async ({ showId }: { showId: string }): Promise<Show> => {
+const getShow = async ({ showId }: { showId: number }): Promise<Show> => {
   try {
-    const apiResponse = await fetch(`/api/shows/${showId}/details`)
+    const apiResponse = await fetch(`/api/shows/${showId}`)
 
     if (!apiResponse.ok) {
       const errorJson = await apiResponse.json()
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
-    getShow({ showId: 'some_searched_id' }).then(setShow).catch(setError)
+    getShow({ showId: 1 }).then(setShow).catch(setError)
   }, [])
 
   if (error)
@@ -42,27 +42,28 @@ const Home: NextPage = () => {
       </h1>
     )
 
-  if (show)
-    return (
-      <>
-        <h1 className="mx-4 my-6 text-3xl">{show.title}</h1>
-        <h2 className="mx-4 my-6 font-extra-light">{show.overview}</h2>
-        <div className="my-6 w-full text-center">
-          <Image className="rounded-md" src={show.imageUrl} width={300} height={400} />
-        </div>
-      </>
-    )
-
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
         <title>{companyName} | Welcome</title>
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-3xl font-bold">{companyName} web.</h1>
-        <p className="mt-8">Comming soon...</p>
-        <p>Wait for it</p>
+      <main className="flex w-full flex-1 flex-col items-center justify-center text-center">
+        {show ? (
+          <>
+            <h1 className="mx-4 my-6 text-3xl">{show.title}</h1>
+            <p>Year {show.year}</p>
+            <p>
+              <span className="font-semibold rounded bg-purple-100 px-2.5 py-0.5 text-xs text-purple-800 dark:bg-purple-200 dark:text-purple-900">
+                {show.type}
+              </span>
+            </p>
+            <h2 className="mx-4 my-6 font-extra-light">{show.overview}</h2>
+            <div className="my-6 w-full text-center">
+              <Image className="rounded-md" src={show.cover} width={300} height={400} />
+            </div>
+          </>
+        ) : null}
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center font-extra-light">

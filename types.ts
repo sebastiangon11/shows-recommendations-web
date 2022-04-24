@@ -1,6 +1,9 @@
 export interface Show {
-  id: string
+  id: number
   title: string
-  imageUrl: string
+  cover: string
   overview: string
+  genres: string[]
+  year: number
+  type: 'MOVIE' | 'SERIE'
 }
