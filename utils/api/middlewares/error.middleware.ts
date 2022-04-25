@@ -7,9 +7,7 @@ export const errorMiddleware = (
   res: NextApiResponse,
   next: NextHandler
 ) => {
-  console.error('[API_ERROR_MIDDLEWARE]', error)
+  console.error('[API_ERROR_MIDDLEWARE]', '[Error]', error)
 
-  return res
-    .status(res.statusCode || 500)
-    .json({ message: res.statusMessage || 'Something went wrong' })
+  return res.status(500).json({ message: res.statusMessage || 'Something went wrong' })
 }

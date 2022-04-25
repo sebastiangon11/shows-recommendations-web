@@ -6,7 +6,6 @@ export const loggerMiddleware = async (
   res: NextApiResponse,
   next: NextHandler
 ) => {
-  console.log('In :>>', req.url)
+  console.log('Incoming request :>>', req.url)
   next()
-  console.log('Out <<:', req.url, 'Status:', res.statusCode)
 }

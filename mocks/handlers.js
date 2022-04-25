@@ -2,7 +2,7 @@ import { rest } from 'msw'
 
 export const handlers = [
   rest.get('http://localhost:8080/shows/:showId', (req, res, ctx) => {
-    // return res(ctx.status(500), ctx.json({ message: 'Internal server error from msw' }))
+    return res(ctx.status(500), ctx.json({ message: 'Internal server error from msw' }))
 
     return res(
       ctx.json({

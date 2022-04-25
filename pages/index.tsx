@@ -1,3 +1,4 @@
+import { setDefaultResultOrder } from 'dns'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -32,7 +33,15 @@ const Home: NextPage = () => {
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
-    getShow({ showId: 1 }).then(setShow).catch(setError)
+    getShow({ showId: 1 })
+      .then((show) => {
+        console.log('show :>> ', show)
+        setShow(show)
+      })
+      .catch((err) => {
+        console.log('error :>> ', err)
+        setError(err)
+      })
   }, [])
 
   if (error)
