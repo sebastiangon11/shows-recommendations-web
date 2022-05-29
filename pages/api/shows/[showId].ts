@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import nextConnect from 'next-connect'
+import { recommendationsClient } from '../../../utils/api'
 
 import { errorMiddleware } from '../../../utils/api/middlewares/error.middleware'
 import { loggerMiddleware } from '../../../utils/api/middlewares/logger.middleware'
+import { getErrorMessage } from '../../../utils/getErrorMessage'
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({
   onError: errorMiddleware,
@@ -13,17 +15,13 @@ const getShow = async (req: NextApiRequest, res: NextApiResponse) => {
     query: { showId },
   } = req
 
-  // TODO: Encapsulate api service
-  const apiResponse = await fetch(`http://localhost:8080/users/1/shows/${showId}`)
-
-  if (!apiResponse.ok) {
-    const errorJson = await apiResponse.json()
-    res.statusMessage = errorJson.message
-    throw new Error('ToDo: Create BackendApiError')
+  try {
+    const showResponse = await recommendationsClient(`/users/1/shows/${showId}`)
+    return res.status(200).json(showResponse)
+  } catch (error) {
+    res.statusMessage = getErrorMessage(error)
+    throw error
   }
-
-  const showResponse = await apiResponse.json()
-  return res.status(200).json(showResponse)
 }
 
 handler.use(loggerMiddleware)
