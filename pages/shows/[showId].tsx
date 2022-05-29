@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Show } from '../../types'
 import { apiClient } from '../../utils/api'
 import { getErrorMessage } from '../../utils/getErrorMessage'
@@ -18,20 +19,19 @@ const getShow = async ({ showId }: { showId: number }): Promise<Show> => {
 }
 
 const ShowPage: NextPage = () => {
+  const router = useRouter()
   const [show, setShow] = useState<Show | null>(null)
   const [error, setError] = useState<Error | null>(null)
 
+  console.log('router.query :>> ', router.query)
+
+  const showId = useMemo(() => parseInt(router.query.showId?.toString() || '', 10), [router.query])
+
   useEffect(() => {
-    getShow({ showId: 1 })
-      .then((show) => {
-        console.log('show :>> ', show)
-        setShow(show)
-      })
-      .catch((err) => {
-        console.log('error :>> ', err)
-        setError(err)
-      })
-  }, [])
+    if (!showId) return
+
+    getShow({ showId }).then(setShow).catch(setError)
+  }, [showId])
 
   if (error)
     return (
