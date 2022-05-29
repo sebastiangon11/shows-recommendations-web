@@ -13,10 +13,8 @@ const getShow = async (req: NextApiRequest, res: NextApiResponse) => {
     query: { showId },
   } = req
 
-  console.log('res.statusCode :>> ', res.statusCode)
-
   // TODO: Encapsulate api service
-  const apiResponse = await fetch(`http://localhost:8080/shows/${showId}`)
+  const apiResponse = await fetch(`http://localhost:8080/users/1/shows/${showId}`)
 
   if (!apiResponse.ok) {
     const errorJson = await apiResponse.json()

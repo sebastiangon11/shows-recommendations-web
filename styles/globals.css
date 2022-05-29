@@ -2,10 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply text-zinc-200;
+@layer utilities {
+  .bg-main-gradient {
+    @apply bg-gradient-to-br from-primary to-secondary;
+  }
+}
+
+html,
+body {
   font-family: 'Raleway', sans-serif;
-  background: rgb(0, 32, 45);
-  background: linear-gradient(220deg, rgba(0, 32, 45, 1) 0%, rgba(3, 20, 47, 1) 100%);
-  min-height: 100vh;
+  @apply min-h-screen bg-primary text-zinc-200;
+}
+
+/* Layout */
+#__next {
+  display: contents;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  @apply p-4;
+}
+
+a {
+  @apply text-blue-400 underline;
 }

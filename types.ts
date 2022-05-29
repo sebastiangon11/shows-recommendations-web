@@ -1,3 +1,4 @@
+type Review = { rating: number }
 export interface Show {
   id: number
   title: string
@@ -6,4 +7,5 @@ export interface Show {
   genres: string[]
   year: number
   type: 'MOVIE' | 'SERIE'
+  review?: Review
 }
