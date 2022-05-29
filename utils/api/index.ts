@@ -36,7 +36,7 @@ const httpClient =
     })
   }
 
-const apiClient = httpClient(process.env.NEXT_PUBLIC_API_URL || '')
+const apiClient = httpClient('')
 const recommendationsClient = httpClient(process.env.RECOMMENDATIONS_BACKEND || '')
 
 export { apiClient, recommendationsClient }
