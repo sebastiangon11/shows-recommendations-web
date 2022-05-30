@@ -1,3 +1,5 @@
+import { HttpRequestError } from '../errors/HttpRequestError'
+
 type Endpoint = string
 
 /**
@@ -10,7 +12,7 @@ type Endpoint = string
 
 const httpClient =
   (baseURL: string) =>
-  <T>(endpoint: Endpoint, requestConfig: RequestInit = {}): Promise<T> => {
+  async <T>(endpoint: Endpoint, requestConfig: RequestInit = {}): Promise<T> => {
     const { method, headers, body } = requestConfig
 
     const config = {
@@ -24,14 +26,15 @@ const httpClient =
     }
 
     const url = `${baseURL}${endpoint}`
-    console.log('Outbounding request to :>> ', url)
+    console.log('↗️', url)
 
     return fetch(url, config).then(async (response) => {
       if (response.ok) {
         return await response.json()
       } else {
-        const errorMessage = await response.text()
-        return Promise.reject(new Error(errorMessage))
+        const message = await response.text()
+        const error = new HttpRequestError(message, url, response.status, response.statusText)
+        return Promise.reject(error)
       }
     })
   }

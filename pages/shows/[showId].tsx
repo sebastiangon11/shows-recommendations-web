@@ -4,33 +4,18 @@ import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
 import { Show } from '../../types'
 import { apiClient } from '../../utils/api'
-import { getErrorMessage } from '../../utils/getErrorMessage'
-
-const getShow = async ({ showId }: { showId: number }): Promise<Show> => {
-  try {
-    return await apiClient<Show>(`/api/shows/${showId}`)
-  } catch (error) {
-    console.error(
-      `Something went wrong while fetching show with id ${showId}`,
-      getErrorMessage(error)
-    )
-    throw error
-  }
-}
 
 const ShowPage: NextPage = () => {
   const router = useRouter()
   const [show, setShow] = useState<Show | null>(null)
   const [error, setError] = useState<Error | null>(null)
 
-  console.log('router.query :>> ', router.query)
-
   const showId = useMemo(() => parseInt(router.query.showId?.toString() || '', 10), [router.query])
 
   useEffect(() => {
     if (!showId) return
 
-    getShow({ showId }).then(setShow).catch(setError)
+    apiClient<Show>(`/api/shows/${showId}`).then(setShow).catch(setError)
   }, [showId])
 
   if (error)
